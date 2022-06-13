@@ -1,0 +1,56 @@
+nano index.php
+
+<?php
+$ip_server = $_SERVER['SERVER_ADDR'];
+
+echo "<h1>Hello from Kubernetes</h1><br>";
+echo "Server IP Address is: $ip_server", <br><p>";
+echo "Made by <font color=blue> Me";
+
+?>
+
+#---------------------------------------------------------
+
+nano Dockerfile
+
+FROM amazonlinux
+
+RUN yum -y update
+RUN yum -y install httpd
+RUN yum -y install php
+
+COPY ./index.php /var/www/html/index.php
+
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+
+EXPOSE 80
+
+#---------------------------------------------------------
+
+docker build -t myk8sapp .
+
+#---------------------------------------------------------
+
+docker images
+
+#---------------------------------------------------------
+
+hub.docker.com/repositories
+Create Repository
+k8sphp
+
+docker tag myk8sapp:latest name_repo/k8sphp:latest
+
+docker images
+
+docker login
+
+docker push name_repo/k8sphp:latest
+
+#---------------------------------------------------------
+
+docker rmi image_name -f
+
+docker pull image_name
+
+docker run -it -p 1234:80 image_name
