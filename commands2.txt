@@ -1,0 +1,33 @@
+docker run -d --name nginx -p 80:80 -v /var/www/html:/usr/share/nginx/html nginx
+
+(example) Dockerfile:
+FROM ubuntu:latest
+MAINTAINER User GB
+RUN apt-get update
+RUN apt-get install nginx -y
+VOLUME "/var/www/html"
+EXPOSE 80
+CMD /usr/sbin/nginx -g "daemon off;"
+
+Сеть в Docker реализована посредством четырёх сетевых драйверов. Можно провести аналогию с
+типом подключения в VirtualBox:
+1. Bridge — сети по умолчанию, аналог типа подключения NAT в VirtualBox. Связь
+устанавливается через Bridge-интерфейс, который поднимается в операционной системе при
+установке Docker и носит название Docker0. Этот интерфейс можно увидеть, выполнив
+команду ip -a.
+2. Host — с помощью этого драйвера контейнер получает доступ к собственному интерфейсу
+хоста. Аналог подключения «Мост» в VirtualBox.
+3. Macvlan даёт контейнерам прямой доступ к интерфейсу и суб-интерфейсу (VLAN) хоста.
+© geekbrains.ru 5
+4. Overlay позволяет строить сети на нескольких хостах с Docker.
+Просмотреть доступные сети можно командой docker network ls, а просмотреть участников сети
+можно, выполнив docker network inspect network_name. Например, docker network inspect
+bridge покажет контейнеры, которые работают в этой сети.
+Доступ к приложениям, запущенным в контейнере, осуществляется через iptables. После установки
+Docker создаёт ряд правил в таблице filter, посредством которых осуществляется фильтрация
+трафика, и правила в таблице NAT, через которые происходит проброс портов до поднятых
+приложений.
+
+docker network ls
+docker network inspect network_name
+docker network inspect bridge
