@@ -1,0 +1,26 @@
+docker -v                                          Версия Docker Engine
+docker ps                                          Список бегущих контейнеров
+docker ps -a                                       Список всех контейнеров
+docker images                                      Список локальных images
+
+docker search tomcat                               Найти  Image tomcat в DockerHub
+docker pull tomcat                                 Скачать Image tomcat из DockerHub
+docker run -it -p 7777:8080 tomcat                 Запустить интерактивно контейнер tomcat на порте 7777
+docker run -d -p 8888:8080 tomcat                  Запустить НЕинтерактивно контейнер tomcat на порте 8888
+docker run -d -p 80:80 nginx                       Запустить НЕинтерактивно контейнер nginx на порте 80
+
+docker tag oldname:v1 newname:v2                   Создать копию Image с другим именем и тагом
+           
+docker build -t myimage:latest                     Создать Image с именем myimage:latest из локального Dockerfile
+docker run -d myimage:latest                       Запустить НЕинтерактивно контейнер myimage:latest (в фоновом режиме)
+
+docker rm 1234567890                               Удалить контейнер с ID 1234567890
+docker rmi 111222333                               Удалить локальный образ с ID 111222333
+
+docker exec -it 5252352352 /bin/bash               Запустить интерактивно /bin/bash на контейнере с ID 5252352352 
+echo "New Version v2" >> /var/www/html/index.html  Изменить файл в контейнере
+exit                                               Выйти из контейнера
+
+docker commit 5252352352 newimage_v2:latest        Создать Image с именем newimage_v2:latest из конетйнера с ID 5252352352
+
+
