@@ -1,5 +1,7 @@
 docker run -d --name nginx -p 80:80 -v /var/www/html:/usr/share/nginx/html nginx
 
+#-------------------------------------------------------------------------------------------
+
 (example) Dockerfile:
 FROM ubuntu:latest
 MAINTAINER User GB
@@ -8,6 +10,8 @@ RUN apt-get install nginx -y
 VOLUME "/var/www/html"
 EXPOSE 80
 CMD /usr/sbin/nginx -g "daemon off;"
+
+#--------------------------------------------------------------------------------------------
 
 Сеть в Docker реализована посредством четырёх сетевых драйверов. Можно провести аналогию с
 типом подключения в VirtualBox:
