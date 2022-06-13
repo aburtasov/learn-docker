@@ -1,0 +1,40 @@
+docker run \
+--rm -it \
+-p 5432:5432 \
+--name postgres \
+-e POSTGRES_PASSWORD=password \
+-e PGDATA=/var/lib/postgresql/data \
+-v $(pwd)/mntdata:/var/lib/postgresql/data \
+postgres:13.1
+
+
+docker exec -it postgres bash
+
+
+Чтобы использовать schema.sql, монтируем эту директорию в контейнер. Для этого перезапускаем
+контейнер с флагами -v $(pwd)/workdir:/workdir и -w /workdir. Теперь файлы из локальной
+директории $(pwd)/workdir доступны в контейнере в директории /workdir
+
+
+docker run \
+--rm -it \
+-p 5432:5432 \
+--name postgres \
+-e POSTGRES_PASSWORD=password \
+-e PGDATA=/var/lib/postgresql/data \
+-v $(pwd)/mntdata:/var/lib/postgresql/data \
+-v $(pwd)/workdir:/workdir \
+-w /workdir \
+postgres:13.1
+
+
+Заходим в контейнер, в директорию /workdir и подключаемся к базе.
+
+~/projects/pgbrains/workdir$ docker exec -it postgres bash
+root@username:/workdir# ls
+schema.sql
+root@username:/workdir# psql -U myuser -d mydb
+
+Используя команду \i, выполняем команды из файла schema.sql:
+
+mydb=> \i schema.sql
