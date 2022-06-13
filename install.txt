@@ -1,0 +1,22 @@
+Установка Docker
+Docker лучше всего устанавливать из официального репозитория Docker. Для этого выполним ряд
+рекомендаций. Все действия производим от имени суперпользователя.
+
+1)Сначала установим пакеты, необходимые для работы apt по протоколу HTTPS:
+apt-get install apt-transport-https ca-certificates curl gnupg-agent
+software-properties-common -y
+
+2)Добавляем ключ репозитория:
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+3)Подключаем репозиторий:
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu
+$(lsb_release -cs) stable"
+
+
+Обновляем список пакетов: apt update. И устанавливаем пакет: apt install docker-ce -y.
+
+На данный момент Docker плотно вливается в структуру стандартных пакетов ОС Linux. Например, в
+последней доступной версии Debian 10 Buster свежие пакеты Docker и Docker Compose уже доступны
+в стандартном репозитории. При установке нет необходимости подключать дополнительный
+репозиторий, их можно установить, выполнив apt install -y docker docker-compose.
